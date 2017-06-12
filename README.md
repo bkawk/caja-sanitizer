@@ -15,12 +15,13 @@
 ## Call the sanitizer
 The response will be a promise
 ```
-this.$.cajaSanitizer.sanitize("<p>Hello, <b onclick=alert(1337)>World</b>!</p>")
+const dirtyString = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>"
+this.$.cajaSanitizer.sanitize(dirtyString)
 .then((sanitized) => {
-    console.log(sanitized)
+    console.debug(sanitized)
 })
 .catch((err) => {
-    reject(err)
+    console.error(err)
 })
 ```
 
