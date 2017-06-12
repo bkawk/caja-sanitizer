@@ -39,7 +39,6 @@
         */
           input: {
             type: Text,
-            observer: "_test"
           },
         /**
         * `output` represents the text that has been sanitized
@@ -58,7 +57,7 @@
       return new Promise((resolve, reject) => { 
         try {
           if (input && typeof html_sanitize !== "undefined") { 
-            resolve(html_sanitize(input)) 
+            resolve({data: html_sanitize(input)}) 
           } else {
             reject(Error("Failed to load html-css-sanitizer-minified.js"))
           }
@@ -72,24 +71,19 @@
     ready() { 
       super.ready()
       if (this.demo){
-        console.log(this.input)
         if(this.input == undefined){
           this.input = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>";
         }
         this.sanitize(this.input)
-        .then((data) => {
-          this.output = data
-          console.log(this.output)
+        .then((res) => {
+          this.output = res.data
         })
         .catch((err) => {
           this.input = "ERROR"
         })
       }
     }
-_test(e){
-  console.log(this.input)
-  console.log(e)
-}
+
     } window.customElements.define(CajaSanitizer.is, CajaSanitizer);
   </script>
 </dom-module>

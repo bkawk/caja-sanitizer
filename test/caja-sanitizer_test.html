@@ -25,9 +25,15 @@
       </template>
     </test-fixture>
 
-        <test-fixture id="noScriptInput">
+    <test-fixture id="noScriptInput">
       <template>
         <caja-sanitizer demo input="<p>Hello, <b>World</b>!</p>" output$="{{output}}"></caja-sanitizer>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="callDirect">
+      <template>
+        <caja-sanitizer id="cajaSanitizer"></caja-sanitizer>
       </template>
     </test-fixture>
 
@@ -62,6 +68,17 @@
           })
         });
 
+        test('call direct', function(done) {
+          var element = fixture('callDirect');
+          var elementShadowRoot = element.shadowRoot;
+          element.sanitize("<p>Hello, <b onclick=alert(1337)>World</b>!</p>")
+          .then(function(res) {
+            flush(function () {
+              assert.equal(res.data, '<p>Hello, <b>World</b>!</p>');
+              done();
+            })
+          })
+        });
 
       });
     </script>
