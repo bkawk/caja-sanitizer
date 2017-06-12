@@ -1,16 +1,15 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-
     <title>caja-sanitizer test</title>
-
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
-
     <link rel="import" href="../caja-sanitizer.html">
   </head>
+
   <body>
 
     <test-fixture id="defaultOutput">
@@ -37,13 +36,11 @@
       </template>
     </test-fixture>
 
-
     <script>
       suite('caja-sanitizer', function() {
-
+        
         test('default output', function(done) {
           var element = fixture('defaultOutput');
-          var elementShadowRoot = element.shadowRoot;
           flush(function () {
             assert.equal(element.output, '<p>Hello, <b>World</b>!</p>');
             done();
@@ -52,7 +49,6 @@
 
         test('script input', function(done) {
           var element = fixture('scriptInput');
-          var elementShadowRoot = element.shadowRoot;
           flush(function () {
             assert.equal(element.output, '<p>Hello, <b>World</b>!</p>');
             done();
@@ -61,7 +57,6 @@
 
         test('no script input', function(done) {
           var element = fixture('noScriptInput');
-          var elementShadowRoot = element.shadowRoot;
           flush(function () {
             assert.equal(element.output, '<p>Hello, <b>World</b>!</p>');
             done();
