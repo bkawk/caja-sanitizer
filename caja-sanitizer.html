@@ -9,20 +9,20 @@
       }
     </style>
     <template is="dom-if" if="{{demo}}">
-      <p>Text to sanitize: {{html}} </p>
-      <p>Sanitizer output: {{test}} </p>
+      <p class="input">Text to sanitize: {{input}} </p>
+      <p class="output">Sanitizer output: {{output}}</p>
     </template>
   </template>
 
   <script>
     /**
-     * `caja-sanitizer`
-     * 
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
+    * `caja-sanitizer`
+    * 
+    *
+    * @customElement
+    * @polymer
+    * @demo demo/index.html
+    */
     class CajaSanitizer extends Polymer.Element {
       static get is() { return 'caja-sanitizer'; }
       static get properties() {
@@ -33,6 +33,20 @@
           demo: {
             type: Boolean,
             value: false
+          },
+        /**
+        * `input` represents the text to be sanitized
+        */
+          input: {
+            type: Text,
+            observer: "_test"
+          },
+        /**
+        * `output` represents the text that has been sanitized
+        */
+          output: {
+            type: Text,
+            notify: true
           }
         };
       }
@@ -58,17 +72,24 @@
     ready() { 
       super.ready()
       if (this.demo){
-        this.html = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>";
-        this.sanitize(this.html)
+        console.log(this.input)
+        if(this.input == undefined){
+          this.input = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>";
+        }
+        this.sanitize(this.input)
         .then((data) => {
-          this.test = data
+          this.output = data
+          console.log(this.output)
         })
         .catch((err) => {
-          reject(err)
+          this.input = "ERROR"
         })
       }
     }
-
+_test(e){
+  console.log(this.input)
+  console.log(e)
+}
     } window.customElements.define(CajaSanitizer.is, CajaSanitizer);
   </script>
 </dom-module>
