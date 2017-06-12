@@ -25,4 +25,10 @@ this.$.cajaSanitizer.sanitize(dirtyString)
 })
 ```
 
+## Pass to the sanitizer
+
+```
+<caja-sanitizer input="[[input]] output="{{output}}"></caja-sanitizer>
+```
+
 
