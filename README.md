@@ -2,20 +2,26 @@
 
 
 
-## Install the Polymer-CLI
+## Import the sanitizer
+```<link rel="import" href="../bower_components/caja-sanitizer/caja-sanitizer.html">```
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
-
-## Viewing Your Element
-
-```
-$ polymer serve
-```
-
-## Running Tests
+## Insert the Element
 
 ```
-$ polymer test
+<caja-sanitizer id="cajaSanitizer"></caja-sanitizer>
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+
+## Call the sanitizer
+The response will be a promise
+```
+this.$.cajaSanitizer.sanitize("<p>Hello, <b onclick=alert(1337)>World</b>!</p>")
+.then((sanitized) => {
+    console.log(sanitized)
+})
+.catch((err) => {
+    reject(err)
+})
+```
+
+

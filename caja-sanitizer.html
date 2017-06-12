@@ -34,15 +34,28 @@
         };
       }
 
-    sanitizeHtml(input){
-      return html_sanitize(input);
+    sanitize(input){
+      return new Promise((resolve, reject) => { 
+        try {
+          resolve(html_sanitize(input)) 
+        }
+        catch(err) {
+          reject(Error(err))
+        }
+      })
     }
 
     ready() { 
       super.ready()
       if (this.demo){
         this.html = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>";
-        this.test = this.sanitizeHtml(this.html)
+        this.sanitize(this.html)
+        .then((data) => {
+          this.test = data
+        })
+        .catch((err) => {
+          reject(err)
+        })
       }
     }
 
