@@ -68,20 +68,16 @@
           })
         });
 
-        test('call direct', function(done) {
+        test('call direct', function() {
           var element = fixture('callDirect');
           var elementShadowRoot = element.shadowRoot;
-          element.sanitize("<p>Hello, <b onclick=alert(1337)>World</b>!</p>")
+          return element.sanitize("<p>Hello, <b onclick=alert(1337)>World</b>!</p>")
           .then(function(res) {
-            flush(function () {
               assert.equal(res.data, '<p>Hello, <b>World</b>!</p>');
-              done();
-            })
           })
         });
 
       });
     </script>
-
   </body>
 </html>
