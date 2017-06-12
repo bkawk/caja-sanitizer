@@ -1,0 +1,47 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<script type="text/javascript" src="html-css-sanitizer-minified.js"></script>
+
+<dom-module id="caja-sanitizer">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <p>Text to sanitize: {{html}} </p>
+    <p>Sanitizer output: {{test}} </p>
+  </template>
+
+  <script>
+    /**
+     * `caja-sanitizer`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class CajaSanitizer extends Polymer.Element {
+      static get is() { return 'caja-sanitizer'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'caja-sanitizer'
+          }
+        };
+      }
+
+    sanitizeHtml(input){
+      return html_sanitize(input);
+    }
+
+    ready() { 
+      super.ready()
+      this.html = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>";
+      this.test = this.sanitizeHtml(this.html)
+    }
+
+    } window.customElements.define(CajaSanitizer.is, CajaSanitizer);
+  </script>
+</dom-module>
