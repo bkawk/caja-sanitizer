@@ -8,8 +8,10 @@
         display: block;
       }
     </style>
-    <p>Text to sanitize: {{html}} </p>
-    <p>Sanitizer output: {{test}} </p>
+    <template is="dom-if" if="{{demo}}">
+      <p>Text to sanitize: {{html}} </p>
+      <p>Sanitizer output: {{test}} </p>
+    </template>
   </template>
 
   <script>
@@ -25,9 +27,9 @@
       static get is() { return 'caja-sanitizer'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'caja-sanitizer'
+          demo: {
+            type: Boolean,
+            value: false
           }
         };
       }
@@ -38,8 +40,10 @@
 
     ready() { 
       super.ready()
-      this.html = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>";
-      this.test = this.sanitizeHtml(this.html)
+      if (this.demo){
+        this.html = "<p>Hello, <b onclick=alert(1337)>World</b>!</p>";
+        this.test = this.sanitizeHtml(this.html)
+      }
     }
 
     } window.customElements.define(CajaSanitizer.is, CajaSanitizer);
