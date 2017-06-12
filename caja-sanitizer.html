@@ -27,6 +27,9 @@
       static get is() { return 'caja-sanitizer'; }
       static get properties() {
         return {
+        /**
+        * `demo` represents whether to display the demo values
+        */
           demo: {
             type: Boolean,
             value: false
@@ -34,10 +37,17 @@
         };
       }
 
+    /**
+    * sanitizes the string argument
+    */
     sanitize(input){
       return new Promise((resolve, reject) => { 
         try {
-          resolve(html_sanitize(input)) 
+          if (input && typeof html_sanitize !== "undefined") { 
+            resolve(html_sanitize(input)) 
+          } else {
+            reject(Error("Failed to load html-css-sanitizer-minified.js"))
+          }
         }
         catch(err) {
           reject(Error(err))
