@@ -69,9 +69,7 @@
         });
 
         test('call direct', function() {
-          var element = fixture('callDirect');
-          var elementShadowRoot = element.shadowRoot;
-          return element.sanitize("<p>Hello, <b onclick=alert(1337)>World</b>!</p>")
+          return fixture('callDirect').sanitize("<p>Hello, <b onclick=alert(1337)>World</b>!</p>")
           .then(function(res) {
               assert.equal(res.data, '<p>Hello, <b>World</b>!</p>');
           })
